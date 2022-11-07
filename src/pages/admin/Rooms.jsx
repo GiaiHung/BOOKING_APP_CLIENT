@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux'
 
 import useFetch from '../../hooks/useFetch'
 import Loading from '../../components/Helper/Loading'
+import axios from 'axios'
+import setAuthToken from '../../utils/setAuthToken'
+import { toast } from 'react-hot-toast'
 
 function Rooms() {
   const {
@@ -12,12 +15,27 @@ function Rooms() {
     loading,
   } = useFetch(`${import.meta.env.VITE_SERVER_URL}/rooms`)
   const {
-    user: { isAdmin, _id: currentUserId },
+    user: { isAdmin, _id: currentUserId, accessToken },
   } = useSelector((state) => state.auth)
 
   const adminAuth = (id) => {
     if (isAdmin || id === currentUserId) return true
   }
+
+  const handleDelete = async (hotelId, roomId) => {
+    try {
+      setAuthToken(accessToken)
+      const { data } = await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/rooms/${hotelId}/${roomId}`
+      )
+      if (data.success) {
+        toast.success(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       {loading ? (
@@ -53,10 +71,13 @@ function Rooms() {
                   <td className="min-w-[200px]">{room.description}</td>
                   <td className="min-w-[100px]">{room.price}</td>
                   <td className="min-w-[100px]">{room.maxPeople}</td>
-                  <td className="min-w-[150px] space-y-4 flex flex-col">
+                  <td className="flex min-w-[150px] flex-col space-y-4">
                     <Button variant="outline-primary">View</Button>
                     {adminAuth(room._id) && (
-                      <Button variant="outline-danger" onClick={() => handleDelete(room._id)}>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => handleDelete(room.hotelId, room._id)}
+                      >
                         Delete
                       </Button>
                     )}

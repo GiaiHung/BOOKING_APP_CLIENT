@@ -4,6 +4,9 @@ import Loading from '../../components/Helper/Loading'
 import { Link } from 'react-router-dom'
 import { Button, Table } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
+import setAuthToken from '../../utils/setAuthToken'
 
 function Hotels() {
   const {
@@ -11,11 +14,19 @@ function Hotels() {
     loading,
   } = useFetch(`${import.meta.env.VITE_SERVER_URL}/hotels`)
   const {
-    user: { isAdmin, _id: currentUserId },
+    user: { isAdmin, _id: currentUserId, accessToken },
   } = useSelector((state) => state.auth)
 
   const adminAuth = (id) => {
     if (isAdmin || id === currentUserId) return true
+  }
+
+  const handleDelete = async (id) => {
+    setAuthToken(accessToken)
+    const { data } = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/hotels/${id}`)
+    if (data.success) {
+      toast.success(data.message)
+    }
   }
   return (
     <>
@@ -52,7 +63,7 @@ function Hotels() {
                   <td className="min-w-[200px]">{hotel.desc}</td>
                   <td className="min-w-[100px]">{hotel.cheapestPrice}</td>
                   <td className="min-w-[100px]">{hotel.rating}</td>
-                  <td className="min-w-[150px] space-y-4 flex flex-col">
+                  <td className="flex min-w-[150px] flex-col space-y-4">
                     <Button variant="outline-primary">View</Button>
                     {adminAuth(hotel._id) && (
                       <Button variant="outline-danger" onClick={() => handleDelete(hotel._id)}>

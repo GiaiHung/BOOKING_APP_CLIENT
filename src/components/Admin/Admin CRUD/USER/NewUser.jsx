@@ -79,8 +79,8 @@ const NewUser = ({ inputs, title }) => {
           <div className="top">
             <h1>{title}</h1>
           </div>
-          <div className="bottom">
-            <div className="left">
+          <div className="bottom flex-col md:flex-row space-y-6 md:space-y-0">
+            <div className="left mx-auto md:mx-0">
               {!isAvatarChanged ? (
                 <img src={user.img} alt="" />
               ) : (
