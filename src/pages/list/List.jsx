@@ -1,8 +1,4 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
-import { format, set } from 'date-fns'
-import { useState } from 'react'
-import { DateRange } from 'react-date-range'
 
 import Navbar from '../../components/Header/Navbar'
 import Header from '../../components/Header/Header'

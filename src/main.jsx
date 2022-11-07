@@ -5,12 +5,14 @@ import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import App from './App'
 import './index.css'
+import { Toaster } from 'react-hot-toast'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <App />
+        <Toaster position="bottom-center" reverseOrder={false} />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

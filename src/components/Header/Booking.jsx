@@ -9,6 +9,7 @@ import BookingOptions from './BookingOptions'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { saveUrl } from '../../redux/locationSlice'
+import dayDifference from '../Helper/dayDifference'
 
 function Booking() {
   const [datePicker, setDatePicker] = useState([
@@ -30,7 +31,10 @@ function Booking() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const dateBetween = dayDifference(datePicker[0].startDate, datePicker[0].endDate)
+
   const handleSearch = () => {
+    if (dateBetween === 0) return alert('Please make sure days you stay at least 1')
     dispatch(
       saveUrl({
         destination,
@@ -44,7 +48,7 @@ function Booking() {
   }
 
   return (
-    <div className="relative bottom-0 mx-auto flex h-fit w-full max-w-6xl items-center justify-center rounded-2xl border-2 border-yellow-500 bg-white px-4 py-2 text-xl text-gray-500 md:absolute md:bottom-[-32px]">
+    <div className="relative -bottom-6 mx-auto flex h-fit w-full max-w-6xl items-center justify-center rounded-2xl border-2 border-yellow-500 bg-white px-4 py-2 text-xl text-gray-500 md:absolute md:bottom-[-32px]">
       <div className="flex w-full flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="bookingItem">
           <FaBed />

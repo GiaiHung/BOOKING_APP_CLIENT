@@ -1,4 +1,4 @@
-import { format, parseISO, setDate } from 'date-fns'
+import { format } from 'date-fns'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveUrl } from '../../redux/locationSlice'
@@ -13,6 +13,17 @@ function SearchBox({ reFetch }) {
   const [max, setMax] = useState(location.max)
 
   const dispatch = useDispatch()
+  const startDate = new Date(datePicker[0].startDate)
+  const endDate = new Date(datePicker[0].endDate)
+
+  const handleUpdateOptions = (e) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: Number(e.target.value),
+      }
+    })
+  }
 
   const handleSearch = () => {
     dispatch(
@@ -40,15 +51,13 @@ function SearchBox({ reFetch }) {
       </div>
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold">Check-in date</h2>
-        <span
-          className="max-w-[300px] bg-white p-2"
-          onClick={() => setOpenDate(!openDate)}
-        >{`${format(datePicker[0]?.startDate, 'MM/dd/yyyy')} to ${format(
-          datePicker[0]?.endDate,
-          'MM/dd/yyyy'
-        )}`}</span>
+        <span className="max-w-[300px] bg-white p-2" onClick={() => setOpenDate(!openDate)}>
+          {`${format(startDate, 'MM/dd/yyyy')}`} to{' '}
+          {`${format(endDate, 'MM/dd/yyyy')}`}
+        </span>
         {openDate && (
           <DateRange
+            editableDateInputs={true}
             onChange={(item) => setDatePicker([item.selection])}
             minDate={new Date()}
             ranges={datePicker}
@@ -84,15 +93,36 @@ function SearchBox({ reFetch }) {
           </div>
           <div className="lsOptionItem">
             <span className="lsOptionText">Adult</span>
-            <input type="number" min={1} className="lsOptionInput" placeholder={options.adult} />
+            <input
+              type="number"
+              min={1}
+              className="lsOptionInput"
+              placeholder={options.adult}
+              name="adult"
+              onChange={handleUpdateOptions}
+            />
           </div>
           <div className="lsOptionItem">
             <span className="lsOptionText">Children</span>
-            <input type="number" min={0} className="lsOptionInput" placeholder={options.children} />
+            <input
+              type="number"
+              min={0}
+              className="lsOptionInput"
+              placeholder={options.children}
+              name="children"
+              onChange={handleUpdateOptions}
+            />
           </div>
           <div className="lsOptionItem">
             <span className="lsOptionText">Room</span>
-            <input type="number" min={1} className="lsOptionInput" placeholder={options.room} />
+            <input
+              type="number"
+              min={1}
+              className="lsOptionInput"
+              placeholder={options.room}
+              name="room"
+              onChange={handleUpdateOptions}
+            />
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import React from 'react'
 import { FaBed, FaPlane, FaCarSide, FaPlaceOfWorship, FaTaxi } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 import Booking from './Booking'
 
 function Header({ type }) {
+  const {user} = useSelector(state => state.auth)
   return (
     <div className="relative bg-blue-700 py-4 text-2xl font-semibold text-white">
       <div className="mx-auto max-w-6xl px-6 md:px-0">
@@ -36,7 +38,7 @@ function Header({ type }) {
                 Get rewarded for your travels – unlock instant savings of 10% or more with a free
                 Lamabooking account
               </p>
-              <button className="headerBtn">Login / Register</button>
+              {!user && <button className="headerBtn">Login / Register</button>}
             </div>
             <Booking />
           </>

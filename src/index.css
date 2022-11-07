@@ -28,7 +28,7 @@ body {
   }
 
   .bookingItem {
-    @apply flex cursor-pointer items-center space-x-3;
+    @apply flex cursor-pointer items-center space-x-4 flex-grow;
   }
 
   .bookingOptionsOperationBtn {
@@ -42,6 +42,10 @@ body {
 
   .arrow {
     @apply absolute text-5xl cursor-pointer text-gray-400 opacity-80 hover:opacity-100 ease-in duration-150
+  }
+
+  .sidebarItem {
+    @apply flex items-center gap-2 cursor-pointer ml-2 text-2xl font-semibold text-blue-700
   }
 }
 

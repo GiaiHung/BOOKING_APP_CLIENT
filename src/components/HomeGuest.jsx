@@ -8,6 +8,9 @@ function HomeGuest() {
     loading,
     error,
   } = useFetch(`${import.meta.env.VITE_SERVER_URL}/hotels?featured=false&limits=4&min=99&max=999`)
+  const {
+    data,
+  } = useFetch(`${import.meta.env.VITE_SERVER_URL}/users`)
   
   return (
     <>

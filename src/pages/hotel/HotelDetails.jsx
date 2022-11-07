@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import { MdLocationPin } from 'react-icons/md'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs'
-import { useLocation } from 'react-router-dom'
+
 import useFetch from '../../hooks/useFetch'
 import Loading from '../../components/Helper/Loading'
 import dayDifference from '../../components/Helper/DayDifference'
-import { useSelector } from 'react-redux'
+import Reserve from '../../components/Reserve/Reserve'
 
 function HotelDetails() {
+  const { user } = useSelector((state) => state.auth)
   const location = useLocation()
+  const hotelId = location.pathname.split('/')[2]
   const {
     data: { hotel },
     loading,
@@ -18,9 +23,12 @@ function HotelDetails() {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [open, setOpen] = useState(false)
+  const [openRoomReserve, setOpenRoomReserve] = useState(false)
 
   const { datePicker, options } = useSelector((state) => state.location)
   const dateBetween = dayDifference(datePicker[0].endDate, datePicker[0].startDate)
+
+  const navigate = useNavigate()
 
   const handleOpenCarousel = (i) => {
     setCurrentIndex(i)
@@ -29,9 +37,21 @@ function HotelDetails() {
 
   const handleSlide = (direction) => {
     if (direction === 'left') {
-      currentIndex === 0 ? setCurrentIndex(hotel?.photos.length - 1) : setCurrentIndex(currentIndex - 1)
+      currentIndex === 0
+        ? setCurrentIndex(hotel?.photos.length - 1)
+        : setCurrentIndex(currentIndex - 1)
     } else {
-      currentIndex === hotel?.photos.length - 1 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1)
+      currentIndex === hotel?.photos.length - 1
+        ? setCurrentIndex(0)
+        : setCurrentIndex(currentIndex + 1)
+    }
+  }
+
+  const handleReserve = async () => {
+    if (user) {
+      setOpenRoomReserve(true)
+    } else {
+      navigate('/login')
     }
   }
 
@@ -46,11 +66,7 @@ function HotelDetails() {
             onClick={() => handleSlide('left')}
           />
           <div className="mx-auto flex h-[80vh] w-4/5 items-center justify-center">
-            <img
-              src={hotel?.photos[currentIndex]}
-              alt=""
-              className="h-full w-full object-cover"
-            />
+            <img src={hotel?.photos[currentIndex]} alt="" className="h-full w-full object-cover" />
           </div>
           <BsFillArrowRightCircleFill
             className="arrow right-8 z-50"
@@ -58,6 +74,7 @@ function HotelDetails() {
           />
         </div>
       )}
+      {openRoomReserve && <Reserve hotelId={hotelId} setOpenRoomReserve={setOpenRoomReserve} />}
       {loading ? (
         <Loading />
       ) : (
@@ -77,7 +94,10 @@ function HotelDetails() {
                 airport taxi
               </h4>
             </div>
-            <button className="mx-auto rounded-md bg-purple-500 px-2 py-1 text-2xl font-bold text-white md:m-0">
+            <button
+              className="mx-auto rounded-md bg-purple-500 px-2 py-1 text-2xl font-bold text-white md:m-0"
+              onClick={handleReserve}
+            >
               Reserve or book now!
             </button>
           </div>
@@ -116,7 +136,10 @@ function HotelDetails() {
                 </span>{' '}
                 <span>{`(${dateBetween} nights)`}</span>
               </p>
-              <button className="w-full rounded-md bg-purple-500 px-2 py-1 text-2xl font-bold text-white">
+              <button
+                className="w-full rounded-md bg-purple-500 px-2 py-1 text-2xl font-bold text-white"
+                onClick={handleReserve}
+              >
                 Reserve or book now!
               </button>
             </div>
