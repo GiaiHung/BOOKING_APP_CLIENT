@@ -8,7 +8,7 @@ import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-ico
 
 import useFetch from '../../hooks/useFetch'
 import Loading from '../../components/Helper/Loading'
-import dayDifference from '../../components/Helper/DayDifference'
+import dayDifference from '../../components/Helper/dayDifference'
 import Reserve from '../../components/Reserve/Reserve'
 
 function HotelDetails() {
