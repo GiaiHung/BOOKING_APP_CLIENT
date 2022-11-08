@@ -27,7 +27,9 @@ function App() {
       <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
       <Route
         path="/register"
-        element={user ? <Navigate to="/" /> : <NewUser inputs={userRegisterInputs} title="Register" />}
+        element={
+          user ? <Navigate to="/" /> : <NewUser inputs={userRegisterInputs} title="Register" />
+        }
       />
       <Route element={<ProtectedRoutes />}>
         <Route path="/admin" element={<Admin />}>
@@ -40,8 +42,8 @@ function App() {
           path="/admin/user/edit/:id"
           element={<NewUser inputs={userEditInputs} title="Edit" />}
         />
-        <Route path='/admin/hotel/new' element={<NewHotel />} />
-        <Route path='/admin/room/new' element={<NewRoom />} />
+        <Route path="/admin/hotel/new" element={<NewHotel />} />
+        <Route path="/admin/room/new" element={<NewRoom />} />
       </Route>
     </Routes>
   )

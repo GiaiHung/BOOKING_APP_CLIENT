@@ -28,24 +28,24 @@ body {
   }
 
   .bookingItem {
-    @apply flex cursor-pointer items-center space-x-4 flex-grow;
+    @apply flex flex-grow cursor-pointer items-center space-x-4;
   }
 
   .bookingOptionsOperationBtn {
-    @apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-500 p-2 select-none flex-grow;
+    @apply flex h-8 w-8 flex-grow cursor-pointer select-none items-center justify-center rounded-full border border-gray-500 p-2;
   }
 
   .bookingOptionsOperationBtn:disabled {
     cursor: not-allowed;
-    opacity: .75;
+    opacity: 0.75;
   }
 
   .arrow {
-    @apply absolute text-5xl cursor-pointer text-gray-400 opacity-80 hover:opacity-100 ease-in duration-150
+    @apply absolute cursor-pointer text-5xl text-gray-400 opacity-80 duration-150 ease-in hover:opacity-100;
   }
 
   .sidebarItem {
-    @apply flex items-center gap-2 cursor-pointer ml-2 text-2xl font-semibold text-blue-700
+    @apply ml-2 flex cursor-pointer items-center gap-2 text-2xl font-semibold text-blue-700;
   }
 }
 
