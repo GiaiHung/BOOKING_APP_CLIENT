@@ -47,6 +47,10 @@ body {
   .sidebarItem {
     @apply ml-2 flex cursor-pointer items-center gap-2 text-2xl font-semibold text-blue-700;
   }
+
+  .tippyCustom {
+    @apply flex items-center gap-x-2 text-xl font-semibold text-white min-w-[170px] py-2 px-2 hover:bg-gray-500 mb-3
+  }
 }
 
 html *::-webkit-scrollbar {
