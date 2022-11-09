@@ -44,7 +44,7 @@ function Users() {
           <div className="flex items-center justify-between">
             <h1 className="my-4 text-3xl font-semibold text-gray-500">Add New User</h1>
             {isAdmin && (
-              <Link to="/admin/user/edit">
+              <Link to="/register">
                 <Button variant="outline-primary">Add user</Button>
               </Link>
             )}
