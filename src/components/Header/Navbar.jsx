@@ -3,13 +3,15 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/perspective.css'
 import TippyContent from './TippyContent'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { open } from '../../redux/sidebarSlice'
 import { FaBars } from 'react-icons/fa'
 
 function Navbar({ type }) {
   const { user } = useSelector((state) => state.auth)
+
+  const dispatch = useDispatch()
 
   return (
     <div className="bg-blue-700 py-2 font-semibold text-white">
